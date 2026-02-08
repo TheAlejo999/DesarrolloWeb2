@@ -1,6 +1,3 @@
-/**
- * Componente que muestra una lista de películas.
- */
 export const MovieList = ({ movies, onSelectMovie }) => {
   return (
     <ul className="list list-movies">
@@ -15,9 +12,6 @@ export const MovieList = ({ movies, onSelectMovie }) => {
   );
 };
 
-/**
- * Componente que muestra los detalles básicos de una película.
- */
 export const Movie = ({ movie, onSelectMovie }) => {
   return (
     <li onClick={() => onSelectMovie(movie.imdbID)}>

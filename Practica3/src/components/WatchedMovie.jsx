@@ -1,17 +1,14 @@
-/**
- * Componente que muestra la lista de películas ya vistas.
- */
-export const WatchedMoviesList = ({ watched }) => {
+export const WatchedMoviesList = ({ watched, onDeleteWatched }) => {
   return (
     <ul className="list">
       {watched.map((movie) => (
-        <WatchedMovie movie={movie} key={movie.imdbID} />
+        <WatchedMovie movie={movie} key={movie.imdbID} onDeleteWatched={onDeleteWatched} />
       ))}
     </ul>
   );
 };
 
-export function WatchedMovie({ movie }) {
+export function WatchedMovie({ movie, onDeleteWatched }) {
   return (
     <li>
       <img src={movie.poster} alt={`${movie.title} poster`} />
@@ -20,7 +17,7 @@ export function WatchedMovie({ movie }) {
         <p><span>⭐</span><span>{movie.imdbRating}</span></p>
         <p><span>🌟</span><span>{movie.userRating}</span></p>
         <p><span>⏳</span><span>{movie.runtime} min</span></p>
-        <button className="btn-delete">X</button>
+        <button className="btn-delete" onClick={() => onDeleteWatched(movie.imdbID)}>X</button>
       </div>
     </li>
   );
@@ -47,8 +44,6 @@ export function WatchedSummary({ watched }) {
   );
 }
 
-// Nota: WatchedMoviesContainer no está explícitamente definido en la guía, 
-// pero se usa en App.jsx como contenedor.
 export const WatchedMoviesContainer = ({ children }) => {
   return <>{children}</>;
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Logo, Nav, NumResults, Search } from "./components/Nav";
 import { Box } from "./components/Box";
 import { MovieList } from "./components/Movie";
@@ -9,11 +9,15 @@ import { MovieDetails } from "./components/MovieDetails";
 export default function App() {
   const [query, setQuery] = useState("");
   const { movies, isLoading, error } = useFetchMovies(query);
-  const [watched, setWatched] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
+  const [watched, setWatched] = useState(() => {
+    const saved = localStorage.getItem("watched");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   function handleSelectMovie(id) {
-    setSelectedId(id);
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
   }
 
   function handleCloseMovie() {
@@ -22,6 +26,10 @@ export default function App() {
 
   function handleAddWatched(movie) {
     setWatched((watched) => [...watched, movie]);
+  }
+
+  function handleDeleteWatched(id) {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
   return (
@@ -34,25 +42,23 @@ export default function App() {
       <main className="main">
         <Box>
           {isLoading && <p className="loader">Cargando...</p>}
+          {!isLoading && !error && <MovieList movies={movies} onSelectMovie={handleSelectMovie} />}
           {error && <p className="error">⛔ {error}</p>}
-          <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
         </Box>
         <Box>
-          <WatchedMoviesContainer>
-            {selectedId ? (
-              <MovieDetails
-                selectedId={selectedId}
-                onCloseMovie={handleCloseMovie}
-                onAddWatched={handleAddWatched}
-                watched={watched}
-              />
-            ) : (
-              <>
-                <WatchedSummary watched={watched} />
-                <WatchedMoviesList watched={watched} />
-              </>
-            )}
-          </WatchedMoviesContainer>
+          {selectedId ? (
+            <MovieDetails
+              selectedId={selectedId}
+              onCloseMovie={handleCloseMovie}
+              onAddWatched={handleAddWatched}
+              watched={watched}
+            />
+          ) : (
+            <>
+              <WatchedSummary watched={watched} />
+              <WatchedMoviesList watched={watched} onDeleteWatched={handleDeleteWatched} />
+            </>
+          )}
         </Box>
       </main>
     </>

@@ -19,6 +19,10 @@ export default function App() {
     useEffect(() => {
     localStorage.setItem("watched", JSON.stringify(watched));
     }, [watched]);
+    /**
+     * 
+     * Maneja la seleccion de la pelicula
+     */
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));

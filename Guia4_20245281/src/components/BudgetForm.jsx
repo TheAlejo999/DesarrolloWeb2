@@ -1,12 +1,25 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { BudgetDispatchContext } from '../context/BudgetContext';
+import { BudgetStateContext } from '../context/BudgetContext';
 
 export const BudgetForm = () => {
     const [budget, setBudget] = useState(0);
     const isInvalid = isNaN(budget) || budget <= 0;
 
     const handleChange=(e)=>{setBudget(e.target.valueAsNumber)}
+
+    const dispatch = useContext(BudgetDispatchContext);
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch({ type: "add-budget", payload: { budget } })
+    }
+
+    const state=useContext(BudgetStateContext)
+    const isValidBudget= state.budget>0;
+
     return (
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-5">
                 <label
                 htmlFor="budget" className="text-4xl text-blue-600 font-bold text-center">

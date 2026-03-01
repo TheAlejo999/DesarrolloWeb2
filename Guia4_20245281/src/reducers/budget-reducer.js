@@ -13,7 +13,7 @@ export const budgetReducer = (state, action) => {
         case "close-modal":
             return {...state, modal: false}
         case "add-expense":
-            return {...state, expenses: [...state.expenses, action.payload.expense], modal: false}
+            return {...state, expenses: [...state.expenses, {...action.payload.expense, id: Date().getTime()}], modal: false}
         default:
             return state;
     }

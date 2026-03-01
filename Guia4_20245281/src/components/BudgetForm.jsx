@@ -32,7 +32,7 @@ export const BudgetForm = () => {
                 name="budget"
                 className="w-full bg-white border border-gray-300 p-2"
                 placeholder="Define tu presupuesto"
-                value={budget}
+                value={isNaN(budget) ? "" : budget}
                 onChange={handleChange}
             />
             <input

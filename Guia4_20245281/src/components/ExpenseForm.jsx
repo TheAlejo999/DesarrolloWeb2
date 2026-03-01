@@ -40,7 +40,7 @@ export const ExpenseForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        //Validación [cite: 63]
+        //Validación 
         if (Object.values(expense).includes('')) {
             setError('Todos los Campos son Obligatorios')
             return

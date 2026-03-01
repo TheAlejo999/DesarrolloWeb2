@@ -75,7 +75,7 @@ export const ExpenseForm = () => {
             <legend className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2">
                 {isEditing ? "Guardar cambios" : "Nuevo gasto"}
             </legend>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
+            {(error || state.error) && <ErrorMessage>{error || state.error}</ErrorMessage>}
             <div className="flex flex-col gap-2">
                 <label htmlFor="expenseName" className="text-xl">
                     Nombre Gasto:

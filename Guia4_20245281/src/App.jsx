@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { BudgetStateContext } from "./context/BudgetContext"
 import { BudgetForm } from "./components/BudgetForm"
 import { BudgetTracker } from "./components/BudgetTracker"
+import ExpenseModal from "./components/ExpenseModal"
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
                     : <BudgetForm />
                 }
             </div>
+            {isValidBudget && (<main className="max-w-3xl mx-auto py-10"> <ExpenseModal/> </main>)}
         </>
     )
 }

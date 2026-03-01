@@ -5,7 +5,7 @@ import { BudgetTracker } from "./components/BudgetTracker"
 import ExpenseModal from "./components/ExpenseModal"
 import { ExpenseList } from "./components/ExpenseList"
 import { FilterByCategory } from "./components/FilterByCategory"
-
+//App principal
 function App() {
 
     const state = useContext(BudgetStateContext)

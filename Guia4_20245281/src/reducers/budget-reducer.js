@@ -12,13 +12,17 @@ export const budgetReducer = (state, action) => {
         case "show-modal":
             return {...state, modal: true}
         case "close-modal":
-            return {...state, modal: false}
+            return {...state, modal: false, editingId: ""}
         case "add-expense":
             return {...state, expenses: [...state.expenses, {...action.payload.expense, id: new Date().getTime()}], modal: false}
         case "remove-expense":
             return {...state, expenses: state.expenses.filter(expense => expense.id != action.payload.id)}
         case "get-expense-by-id":
             return {...state, editingId: action.payload.id, modal: true}
+        case "update-expense":
+            return {
+                ...state, expenses: state.expenses.map(expense => expense.id === action.payload.expense.id ? action.payload.expense : expense), editingId: "", modal: false
+            }
         default:
             return state;
     }

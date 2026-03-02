@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { updateTask, deleteTask } from '../../services/taskService'; 
 import { CATEGORIES } from '../../utils/constants'; 
 import { getDueDateLabel, isOverdue } from '../../utils/dateHelpers'; 
+import toast from 'react-hot-toast';
  
 export default function TaskCard({ task }) { 
   const category = CATEGORIES.find(c => c.id === task.category); 
@@ -10,13 +11,23 @@ export default function TaskCard({ task }) {
    
   const handleToggleComplete = async (e) => { 
     e.preventDefault();
-    await updateTask(task.id, { completed: !task.completed });
+    const result = await updateTask(task.id, { completed: !task.completed });
+    if (result.success) {
+      toast.success(task.completed ? 'Tarea marcada como pendiente' : 'Tarea completada');
+    } else {
+      toast.error('Error al actualizar la tarea');
+    }
   }; 
    
   const handleDelete = async (e) => { 
     e.preventDefault();
     if (window.confirm('¿Deseas eliminar esta tarea?')) {
-      await deleteTask(task.id);
+      const result = await deleteTask(task.id);
+      if (result.success) {
+        toast.success('Tarea eliminada');
+      } else {
+        toast.error('Error al eliminar la tarea');
+      }
     }
   }; 
    

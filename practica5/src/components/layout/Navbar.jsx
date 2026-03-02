@@ -1,12 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
+import { useUIStore } from '../../store/uiStore';
 import { logoutUser } from '../../services/authService';
-import { useState } from 'react';
 
 export default function Navbar() {
     const {user, clearUser} = useAuthStore();
+    const { theme, toggleTheme } = useUIStore();
     const navigate = useNavigate();
-    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    const isDarkMode = theme === 'dark';
 
     const handleLogout = async () => {
         const result = await logoutUser();
@@ -16,9 +18,9 @@ export default function Navbar() {
         }
     };
 
-    const toggleDarkMode = () => {
-        setIsDarkMode(!isDarkMode);
-        if (!isDarkMode) {
+    const handleToggleDarkMode = () => {
+        toggleTheme();
+        if (theme === 'light') {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
@@ -39,7 +41,7 @@ export default function Navbar() {
                             {user?.displayName || user?.email}
                         </span>
                         <button 
-                            onClick={toggleDarkMode}
+                            onClick={handleToggleDarkMode}
                             className={`px-3 py-2 rounded-lg transition-colors ${
                                 isDarkMode 
                                     ? 'bg-gray-800 hover:bg-gray-700' 

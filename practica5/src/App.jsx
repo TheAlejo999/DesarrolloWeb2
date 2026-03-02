@@ -1,8 +1,14 @@
 import React from 'react';
+import { Toaster } from 'react-hot-toast';
 import AppRouter from './routes/AppRouter';
 
 function App() {
-  return <AppRouter />;
+  return (
+    <>
+      <AppRouter />
+      <Toaster position="top-right" />
+    </>
+  );
 }
 
 export default App;

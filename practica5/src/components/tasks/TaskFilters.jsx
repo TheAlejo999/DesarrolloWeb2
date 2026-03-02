@@ -2,10 +2,24 @@ import { useTaskStore } from '../../store/taskStore'; // Asegúrate de que la ru
 import { FILTERS, CATEGORIES } from '../../utils/constants'; 
  
 export default function TaskFilters() { 
-  const { currentFilter, currentCategory, setFilter, setCategory } = useTaskStore(); 
+  const { currentFilter, currentCategory, searchQuery, setFilter, setCategory, setSearchQuery } = useTaskStore(); 
    
   return ( 
     <div className="card mb-6"> 
+      {/* Campo de búsqueda */}
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Buscar tareas
+        </label>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Buscar por título o descripción..."
+          className="input-field w-full"
+        />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> 
         {/* Filtro por estado */} 
         <div> 

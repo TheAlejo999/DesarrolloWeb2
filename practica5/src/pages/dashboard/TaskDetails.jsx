@@ -5,6 +5,7 @@ import { CATEGORIES, PRIORITIES } from '../../utils/constants';
 import { formatDateTime, getDueDateLabel, isOverdue } from '../../utils/dateHelpers'; 
 import LoadingSpinner from '../../components/common/LoadingSpinner'; 
 import TaskForm from '../../components/tasks/TaskForm'; 
+import toast from 'react-hot-toast';
  
 export default function TaskDetails() { 
   const { taskId } = useParams(); 
@@ -33,16 +34,22 @@ export default function TaskDetails() {
   const handleToggleComplete = async () => { 
     const result = await updateTask(taskId, { completed: !task.completed }); 
     if (result.success) { 
-      setTask({ ...task, completed: !task.completed }); 
-    } 
+      setTask({ ...task, completed: !task.completed });
+      toast.success(task.completed ? 'Tarea marcada como pendiente' : 'Tarea completada');
+    } else {
+      toast.error('Error al actualizar la tarea');
+    }
   }; 
  
   const handleDelete = async () => { 
     if (window.confirm('¿Estás seguro de que deseas eliminar esta tarea?')) { 
       const result = await deleteTask(taskId); 
       if (result.success) { 
+        toast.success('Tarea eliminada');
         navigate('/dashboard'); 
-      } 
+      } else {
+        toast.error('Error al eliminar la tarea');
+      }
     } 
   }; 
  

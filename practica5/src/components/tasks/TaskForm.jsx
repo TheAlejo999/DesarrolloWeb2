@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useAuthStore } from '../../store/authStore'; 
 import { createTask, updateTask } from '../../services/taskService'; 
 import { CATEGORIES, PRIORITIES } from '../../utils/constants'; 
+import toast from 'react-hot-toast';
  
 export default function TaskForm({ onClose, taskToEdit = null }) { 
   const user = useAuthStore((state) => state.user); 
@@ -57,9 +58,12 @@ export default function TaskForm({ onClose, taskToEdit = null }) {
     } 
      
     if (result.success) { 
+      toast.success(isEditing ? 'Tarea actualizada exitosamente' : 'Tarea creada exitosamente');
       onClose(); 
     } else { 
-      setError(isEditing ? 'Error al actualizar la tarea' : 'Error al crear la tarea'); 
+      const errorMsg = isEditing ? 'Error al actualizar la tarea' : 'Error al crear la tarea';
+      setError(errorMsg);
+      toast.error(errorMsg);
     } 
      
     setLoading(false); 

@@ -8,7 +8,7 @@ export default function TaskFilters() {
     <div className="card mb-6"> 
       {/* Campo de búsqueda */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Buscar tareas
         </label>
         <input
@@ -23,7 +23,7 @@ export default function TaskFilters() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> 
         {/* Filtro por estado */} 
         <div> 
-          <label className="block text-sm font-medium text-gray-700 mb-2"> 
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"> 
             Filtrar por estado 
           </label> 
           <div className="flex gap-2"> 
@@ -45,7 +45,7 @@ export default function TaskFilters() {
          
         {/* Filtro por categoría */} 
         <div> 
-          <label className="block text-sm font-medium text-gray-700 mb-2"> 
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"> 
             Filtrar por categoría 
           </label> 
           <select 

@@ -94,10 +94,10 @@ export default function TaskDetails() {
         <div className={`card ${isOverdue(task.dueDate, task.completed) ? 'border-l-4 border-red-500' : ''}`}> 
           <div className="flex justify-between items-start mb-6"> 
             <div> 
-              <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase mb-2 bg-${category?.color}-100 text-${category?.color}-800`}> 
+              <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase mb-2 bg-${category?.color}-100 dark:bg-${category?.color}-900 text-${category?.color}-800 dark:text-${category?.color}-200`}> 
                 {category?.label} 
               </span> 
-              <h1 className={`text-3xl font-bold ${task.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}> 
+              <h1 className={`text-3xl font-bold ${task.completed ? 'line-through text-gray-500 dark:text-gray-400' : 'text-gray-800 dark:text-white'}`}> 
                 {task.title} 
               </h1> 
             </div> 
@@ -110,22 +110,22 @@ export default function TaskDetails() {
           </div> 
  
           <div className="prose max-w-none mb-8"> 
-            <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">Descripción</h3> 
-            <p className="text-gray-700 whitespace-pre-wrap"> 
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Descripción</h3> 
+            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap"> 
               {task.description || 'Sin descripción'} 
             </p> 
           </div> 
  
-          <dl className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 border-t border-b py-6"> 
+          <dl className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 border-t border-b dark:border-gray-700 py-6"> 
             <div> 
-              <dt className="text-sm font-medium text-gray-500 uppercase">Vencimiento</dt> 
-              <dd className={`text-lg font-semibold ${isOverdue(task.dueDate, task.completed) ? 'text-red-600' : 'text-gray-900'}`}> 
+              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase">Vencimiento</dt> 
+              <dd className={`text-lg font-semibold ${isOverdue(task.dueDate, task.completed) ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100'}`}> 
                 {getDueDateLabel(task.dueDate) || 'Sin fecha'} 
               </dd> 
             </div> 
             <div> 
-              <dt className="text-sm font-medium text-gray-500 uppercase">Creada el</dt> 
-              <dd className="text-lg font-semibold text-gray-900"> 
+              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase">Creada el</dt> 
+              <dd className="text-lg font-semibold text-gray-900 dark:text-gray-100"> 
                 {formatDateTime(task.createdAt)} 
               </dd> 
             </div> 

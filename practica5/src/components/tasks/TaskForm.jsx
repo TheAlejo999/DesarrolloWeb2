@@ -73,7 +73,7 @@ export default function TaskForm({ onClose, taskToEdit = null }) {
     <div className="card"> 
       {/* Header del formulario */} 
       <div className="flex justify-between items-center mb-4"> 
-        <h3 className="text-xl font-bold text-gray-800"> 
+        <h3 className="text-xl font-bold text-gray-800 dark:text-white"> 
           {isEditing ? 'Editar Tarea' : 'Nueva Tarea'} 
         </h3> 
         <button 
@@ -93,7 +93,7 @@ export default function TaskForm({ onClose, taskToEdit = null }) {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4"> 
         {/* Campo: Título */} 
         <div> 
-          <label className="block text-sm font-medium text-gray-700 mb-2"> 
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"> 
             Título * </label> 
           <input 
             type="text" 
@@ -114,7 +114,7 @@ export default function TaskForm({ onClose, taskToEdit = null }) {
          
         {/* Campo: Descripción */} 
         <div> 
-          <label className="block text-sm font-medium text-gray-700 mb-2"> 
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"> 
             Descripción 
           </label> 
           <textarea 
@@ -128,7 +128,7 @@ export default function TaskForm({ onClose, taskToEdit = null }) {
         {/* Grid de 3 columnas: Categoría, Prioridad, Fecha */} 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4"> 
           <div> 
-            <label className="block text-sm font-medium text-gray-700 mb-2"> 
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"> 
               Categoría * </label> 
             <select 
               className="input-field" 
@@ -143,7 +143,7 @@ export default function TaskForm({ onClose, taskToEdit = null }) {
           </div> 
            
           <div> 
-            <label className="block text-sm font-medium text-gray-700 mb-2"> 
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"> 
               Prioridad * </label> 
             <select 
               className="input-field" 
@@ -158,7 +158,7 @@ export default function TaskForm({ onClose, taskToEdit = null }) {
           </div> 
            
           <div> 
-            <label className="block text-sm font-medium text-gray-700 mb-2"> 
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"> 
               Fecha de vencimiento 
             </label> 
             <input 

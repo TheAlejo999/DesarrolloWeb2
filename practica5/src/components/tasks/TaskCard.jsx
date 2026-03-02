@@ -36,7 +36,7 @@ export default function TaskCard({ task }) {
       <div className={`card hover:shadow-lg transition-shadow ${isTaskOverdue ? 'border-r-4 border-red-500' : ''} ${task.completed ? 'opacity-60' : ''}`}> 
         {/* Encabezado con título y categoría */}
         <div className="flex items-start justify-between mb-2">
-          <h3 className={`text-lg font-semibold flex-1 ${task.completed ? 'line-through text-gray-500' : ''}`}>
+          <h3 className={`text-lg font-semibold flex-1 dark:text-white ${task.completed ? 'line-through text-gray-500 dark:text-gray-400' : ''}`}>
             {task.title}
           </h3>
           {category && (
@@ -48,7 +48,7 @@ export default function TaskCard({ task }) {
 
         {/* Descripción */}
         {task.description && (
-          <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
             {task.description}
           </p>
         )}

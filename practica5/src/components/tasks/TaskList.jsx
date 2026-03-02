@@ -9,7 +9,7 @@ export default function TaskList({ tasks }) {
     <div> 
       {/* Header con contador y botón */} 
       <div className="flex justify-between items-center mb-6"> 
-        <h2 className="text-2xl font-bold text-gray-800"> 
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white"> 
           Mis Tareas ({tasks.length}) 
         </h2> 
         <button 
@@ -30,8 +30,8 @@ export default function TaskList({ tasks }) {
       {/* Lista de tareas o mensaje vacío */} 
       {tasks.length === 0 ? ( 
         <div className="card text-center py-12"> 
-          <p className="text-gray-500 text-lg">No hay tareas para mostrar</p> 
-          <p className="text-gray-400 mt-2">Crea una nueva tarea para comenzar</p> 
+          <p className="text-gray-500 dark:text-gray-400 text-lg">No hay tareas para mostrar</p> 
+          <p className="text-gray-400 dark:text-gray-500 mt-2">Crea una nueva tarea para comenzar</p> 
         </div> 
       ) : ( 
         <div className="space-y-4"> 

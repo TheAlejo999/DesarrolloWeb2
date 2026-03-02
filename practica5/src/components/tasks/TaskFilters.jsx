@@ -1,4 +1,4 @@
-import { useTaskStore } from '../../store/authStore'; // Asegúrate de que la ruta coincida con tu estructura
+import { useTaskStore } from '../../store/taskStore'; // Asegúrate de que la ruta coincida con tu estructura
 import { FILTERS, CATEGORIES } from '../../utils/constants'; 
  
 export default function TaskFilters() { 

@@ -1,11 +1,16 @@
 import { useAuthStore } from '../../store/authStore';
 import { useTaskStore } from '../../store/taskStore';
+import { useTasks } from '../../hooks/useTasks';
 import TaskFilters from '../../components/tasks/TaskFilters';
 import TaskList from '../../components/tasks/TaskList';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { use } from 'react';
 
 export default function Dashboard() {
     const user = useAuthStore((state) => state.user);
-    const {tasks, currentFilter, currentCategory} = useTaskStore();
+    const {tasks, currentFilter, currentCategory, loading} = useTaskStore();
+
+    useTasks();
 
     const filteredTasks = tasks.filter((task) => {
         if (currentFilter === 'completed' && !task.completed) return false;
@@ -13,6 +18,10 @@ export default function Dashboard() {
         if (currentCategory !== 'all' && task.category !== currentCategory) return false;
         return true;
     });
+
+    if (loading) {
+        return <LoadingSpinner />;
+    }
 
     return (
         <div className="max-w-7xl mx-auto p-6">

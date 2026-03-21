@@ -20,3 +20,14 @@ model Servicio {
   createdAt DateTime @default(now())
   reservas Reserva[]
 }
+
+model Reserva {
+  id Int @id @default(autoincrement())
+  nombre String @db.VarChar(100)
+  correo String @db.VarChar(150)
+  fecha DateTime
+  estado String @default("pendiente")
+  servicioId Int
+  servicio Servicio @relation(fields: [servicioId], references: [id], onDelete:Cascade)
+  createdAt DateTime @default(now())
+}

@@ -15,3 +15,36 @@ function BotonEnviar() {
         </button>
     );
 }
+
+export default function PaginaNuevoServicio() {
+    const [estado, accion] = useActionState(crearServicio, estadoInicial);
+
+    return (
+        <div className="max-w-md">
+            <h1 className="text-xl font-semibold mb-6">Nuevo servicio</h1>
+            <form action={accion} className="space-y-5">
+                <div>
+                    <label className={label}>Nombre</label>
+                    <input type="text" name="nombre" className={input} />
+                    {estado.errores?.nombre && (
+                        <p className="text-xs text-red-400 mt-1">{estado.errores.nombre}</p>
+                    )}
+                </div>
+                <div>
+                    <label className={label}>Descripción</label>
+                    <textarea name="descripcion" rows={3} className={input} />
+                </div>
+                <div>
+                    <label className={label}>Duración (minutos)</label>
+                    <input name="duracion" type="number" min={1} className={input} />
+                    {estado.errores?.duracion && (
+                        <p className="text-xs text-red-500 mt-1">
+                            {estado.errores.duracion}
+                        </p>
+                    )}
+                </div>
+                <BotonEnviar />
+            </form>
+        </div>
+    );
+}

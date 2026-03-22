@@ -12,6 +12,7 @@ const EsquemaReserva = z.object({
     servicioId: z.coerce.number({message: "Debe seleccionar un servicio"}),
 });
 
+
 export async function crearReserva(_estadoPrevio: any, formData: FormData) {
     const campos = EsquemaReserva.safeParse({
         nombre: formData.get("nombre"),
@@ -27,18 +28,71 @@ export async function crearReserva(_estadoPrevio: any, formData: FormData) {
         };
     }
 
-    await prisma.reserva.create({ 
+    const servicio = await prisma.servicio.findUnique({ where: { id: campos.data.servicioId } });
+    if (!servicio) {
+        return { errores: { servicioId: ["Servicio no encontrado."] }, mensaje: "" };
+    }
+    const fechaInicio = new Date(campos.data.fecha);
+    const fechaFin = new Date(fechaInicio.getTime() + servicio.duracion * 60000);
+    const conflicto = await prisma.reserva.findFirst({
+        where: {
+            servicioId: campos.data.servicioId,
+            estado: { not: "cancelada" },
+            OR: [
+                {
+                    fecha: {
+                        gte: fechaInicio,
+                        lt: fechaFin,
+                    },
+                },
+                {
+                    AND: [
+                        { fecha: { lte: fechaInicio } },
+                        { fecha: { gt: new Date(fechaInicio.getTime() - servicio.duracion * 60000) } },
+                    ],
+                },
+            ],
+        },
+    });
+    if (conflicto) {
+        return {
+            errores: { fecha: ["Ya existe una reserva para este servicio en ese horario."] },
+            mensaje: "Conflicto de horario.",
+        };
+    }
+
+    await prisma.reserva.create({
         data: {
             nombre: campos.data.nombre,
             correo: campos.data.correo,
-            fecha: new Date(campos.data.fecha),
+            fecha: fechaInicio,
             servicioId: campos.data.servicioId,
         },
     });
 
     revalidatePath("/reservas");
     redirect("/reservas");
-};
+}
+
+export async function cancelarReserva(id: number) {
+    try {
+        await prisma.reserva.update({ where: { id }, data: { estado: "cancelada" } });
+        revalidatePath("/reservas");
+        return { exito: true };
+    } catch {
+        return { exito: false, mensaje: "No se pudo cancelar la reserva." };
+    }
+}
+
+export async function confirmarReserva(id: number) {
+    try {
+        await prisma.reserva.update({ where: { id }, data: { estado: "confirmada" } });
+        revalidatePath("/reservas");
+        return { exito: true };
+    } catch {
+        return { exito: false, mensaje: "No se pudo confirmar la reserva." };
+    }
+}
 
 export async function eliminarReserva(id: number) {
     try {
@@ -48,4 +102,4 @@ export async function eliminarReserva(id: number) {
     } catch {
         return { exito: false, mensaje: "No se pudo eliminar la reserva." };
     }
-};
+}

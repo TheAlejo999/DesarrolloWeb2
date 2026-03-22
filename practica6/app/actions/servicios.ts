@@ -33,11 +33,8 @@ export async function crearServicio(_estadoPrevio: any, formData: FormData) {
     };
   }
 
-  try {
+  
     await prisma.servicio.create({ data: campos.data }); 
-  } catch (error) {
-    return { mensaje: "Error de base de datos al crear el servicio." };
-  }
 
   // Invalida la caché de /servicios para que el listado muestre el nuevo registro 
   revalidatePath("/servicios"); 

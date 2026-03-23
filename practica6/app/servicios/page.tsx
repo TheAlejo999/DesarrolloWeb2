@@ -3,9 +3,10 @@ import Link from "next/link";
 import { BotonEliminarServicio } from "./boton-eliminar";
 import { tarjeta } from "@/lib/estilos";
 
+// Esta página muestra la lista de servicios disponibles, con opciones para agregar un nuevo servicio o eliminar los existentes.
 export default async function PaginaServicios() {
   const servicios = await prisma.servicio.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: "desc" }, 
     include: { _count: { select: { reservas: true } } },
   });
 

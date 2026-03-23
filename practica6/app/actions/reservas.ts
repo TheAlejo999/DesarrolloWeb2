@@ -10,6 +10,13 @@ const EsquemaReserva = z.object({
     correo: z.string().email("El correo no es válido."),
     fecha: z.string().min(1, "La fecha es obligatoria."),
     servicioId: z.coerce.number({message: "Debe seleccionar un servicio"}),
+/**
+ * Crea una nueva reserva validando que no haya conflicto de horario para el mismo servicio.
+ * - Valida los campos del formulario.
+ * - Busca el servicio y su duración.
+ * - Verifica que no exista otra reserva activa (no cancelada) que se cruce en el horario.
+ * - Si hay conflicto, retorna error; si no, crea la reserva.
+ */
 });
 
 
@@ -71,6 +78,10 @@ export async function crearReserva(_estadoPrevio: any, formData: FormData) {
     });
 
     revalidatePath("/reservas");
+/**
+ * Cancela una reserva cambiando su estado a "cancelada" (no la elimina físicamente).
+ * Esto permite mantener el historial de reservas y distinguir entre reservas activas y canceladas.
+ */
     redirect("/reservas");
 }
 
@@ -81,6 +92,10 @@ export async function cancelarReserva(id: number) {
         return { exito: true };
     } catch {
         return { exito: false, mensaje: "No se pudo cancelar la reserva." };
+/**
+ * Confirma una reserva cambiando su estado a "confirmada".
+ * Útil para flujos donde una reserva debe ser aprobada o confirmada manualmente.
+ */
     }
 }
 
@@ -91,6 +106,10 @@ export async function confirmarReserva(id: number) {
         return { exito: true };
     } catch {
         return { exito: false, mensaje: "No se pudo confirmar la reserva." };
+/**
+ * Elimina una reserva de la base de datos (borrado físico).
+ * Se recomienda usar cancelarReserva para mantener historial, pero esta función está disponible si se requiere borrado total.
+ */
     }
 }
 
